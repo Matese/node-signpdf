@@ -27,12 +27,12 @@
         "node": ">=8.9"
     },
     "scripts": {
-        "test:coverage": "./node_modules/.bin/jest --coverage",
-        "test": "./node_modules/.bin/jest",
-        "test:watch": "./node_modules/.bin/jest --watch",
-        "build": "./node_modules/.bin/babel ./src -d ./dist --ignore \"**/*.test.js\"",
-        "build:watch": "./node_modules/.bin/babel --watch ./src -d ./dist --ignore \"**/*.test.js\"",
-        "lint": "./node_modules/.bin/eslint -c .eslintrc --ignore-path .eslintignore ./",
+        "test:coverage": "jest --coverage",
+        "test": "jest",
+        "test:watch": "jest --watch",
+        "build": "babel ./src -d ./dist --ignore \"**/*.test.js\"",
+        "build:watch": "babel --watch ./src -d ./dist --ignore \"**/*.test.js\"",
+        "lint": "eslint -c .eslintrc --ignore-path .eslintignore ./",
         "precommit": "npm run lint",
         "prepush": "npm run test"
     },
