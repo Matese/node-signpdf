@@ -35,6 +35,7 @@ const plainAddPlaceholder = ({
     location = 'Location from p12',
     signatureLength = DEFAULT_SIGNATURE_LENGTH,
     subFilter = SUBFILTER_ADOBE_PKCS7_DETACHED,
+    rect = [0, 0, 0, 0],
 }) => {
     let pdf = removeTrailingNewLine(pdfBuffer);
     const info = readPdf(pdf);
@@ -86,6 +87,7 @@ const plainAddPlaceholder = ({
         location,
         signatureLength,
         subFilter,
+        rect,
     });
 
     if (!isContainBufferRootWithAcroform(pdf)) {

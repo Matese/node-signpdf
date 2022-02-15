@@ -158,6 +158,37 @@ describe('Test signing', () => {
         expect(typeof signature === 'string').toBe(true);
         expect(signedData instanceof Buffer).toBe(true);
     });
+    it('signs a ready pdf two times and export to a file', async () => {
+
+        /**
+         *
+         * Unlike a raster image, in which the origin is located at the top left corner,
+         * the PDF document's origin is (by default) located at the bottom left corner.
+         *
+         * A4 dimensions are rounded off to 595 × 842 points
+         *
+         * rect [x, y, width, height]
+         *
+         * References:
+         *   https://www.gdpicture.com/guides/gdpicture/About%20a%20PDF%20format.html
+         *   https://www.prepressure.com/library/paper-size/din-a4
+         *
+         */
+
+        const p12Buffer = fs.readFileSync(`${__dirname}/../resources/certificate.p12`);
+        let pdfBuffer = fs.readFileSync(`${__dirname}/../resources/w3dummy.pdf`);
+
+        pdfBuffer = plainAddPlaceholder({pdfBuffer, reason: 'first', signatureLength: 1612, rect: [50, 100, 100, 150]});
+        pdfBuffer = signer.sign(pdfBuffer, p12Buffer);
+
+        pdfBuffer = plainAddPlaceholder({pdfBuffer, reason: 'second', signatureLength: 1612, rect: [50, 50, 100, 100]});
+        pdfBuffer = signer.sign(pdfBuffer, p12Buffer);
+
+        const randomNumber = Math.floor(Math.random() * 5000);
+        const pdfName = `${__dirname}/../exports/signed_file_${randomNumber}.pdf`
+        fs.writeFileSync(pdfName, pdfBuffer);
+        expect(fs.existsSync(pdfName)).toBe(true);
+    });
     it('signs a ready pdf that does not have Annots', async () => {
         const p12Buffer = fs.readFileSync(`${__dirname}/../resources/certificate.p12`);
         let pdfBuffer = fs.readFileSync(`${__dirname}/../resources/no-annotations.pdf`);
