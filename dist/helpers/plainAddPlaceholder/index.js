@@ -52,7 +52,8 @@ const plainAddPlaceholder = ({
   name = 'Name from p12',
   location = 'Location from p12',
   signatureLength = _const.DEFAULT_SIGNATURE_LENGTH,
-  subFilter = _const.SUBFILTER_ADOBE_PKCS7_DETACHED
+  subFilter = _const.SUBFILTER_ADOBE_PKCS7_DETACHED,
+  rect = [0, 0, 0, 0]
 }) => {
   let pdf = (0, _removeTrailingNewLine.default)(pdfBuffer);
   const info = (0, _readPdf.default)(pdf);
@@ -90,7 +91,8 @@ const plainAddPlaceholder = ({
     name,
     location,
     signatureLength,
-    subFilter
+    subFilter,
+    rect
   });
 
   if (!isContainBufferRootWithAcroform(pdf)) {
